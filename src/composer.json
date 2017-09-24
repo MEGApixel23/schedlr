@@ -1,0 +1,8 @@
+{
+    "name": "megapixel23/schedlr",
+    "require": {
+        "botman/botman": "^2.0",
+        "botman/driver-telegram": "^1.0",
+        "vlucas/phpdotenv": "^2.4"
+    }
+}

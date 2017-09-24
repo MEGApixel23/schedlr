@@ -1,0 +1,30 @@
+FROM php:7.1-apache
+
+ENV APACHE_CONF_DIR=/etc/apache2
+
+RUN apt-get update && \
+	apt-get install -y git libcurl4-gnutls-dev libmcrypt-dev libxml2-dev && \
+	docker-php-ext-install -j$(nproc) iconv mcrypt pdo_mysql pcntl curl bcmath mbstring soap mysqli && \
+	docker-php-ext-enable iconv mcrypt pdo_mysql pcntl curl bcmath mbstring soap mysqli
+
+RUN cp /dev/null ${APACHE_CONF_DIR}/conf-available/other-vhosts-access-log.conf \
+    && rm ${APACHE_CONF_DIR}/sites-enabled/000-default.conf ${APACHE_CONF_DIR}/sites-available/000-default.conf \
+    && a2enmod rewrite
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_host=docker_host" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_connect_back=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+RUN php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" && \
+    php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer && \
+    rm -rf /tmp/composer-setup.php
+
+WORKDIR /var/www
+COPY ./deploy/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
+EXPOSE 80
