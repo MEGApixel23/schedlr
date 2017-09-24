@@ -2,8 +2,8 @@
 
 namespace app\handlers;
 
+use app\models\Chat;
 use BotMan\BotMan\BotMan;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DefaultHandler
 {
@@ -15,8 +15,6 @@ class DefaultHandler
     public function newMember(BotMan $bot)
     {
         $bot->reply('New member!');
-        $payload = $bot->getMessage()->getPayload();
-
-        Capsule::table('chats')->insert(['chat_id' => $payload['chat']['id']]);
+        Chat::newChat($bot->getMessage()->getPayload());
     }
 }
