@@ -16,5 +16,6 @@ return [
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => '',
-    ]
+    ],
+    'commandsDictionary' => require_once(__DIR__ . '/resources/commandsDictionary.php')
 ];
