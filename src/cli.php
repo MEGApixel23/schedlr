@@ -6,11 +6,12 @@ use app\helpers\CallHelper;
 require_once(__DIR__ . '/bootstrap.php');
 
 $commands = [
-    'migrate' => 'app\commands\MigrateCommand'
+    'migrate' => 'app\commands\MigrateCommand',
+    'remind' => 'app\commands\SendRemindersCommand',
 ];
 
 $cmd = $argv[1] ?? null;
 if (isset($commands[$cmd])) {
     $handler = $commands[$cmd];
-    CallHelper::call("{$handler}@run");
+    CallHelper::call("{$handler}@run", [ $botman ]);
 }
