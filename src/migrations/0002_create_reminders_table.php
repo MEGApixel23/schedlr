@@ -5,10 +5,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 return function () {
     Capsule::schema()
-        ->create('chats', function (Blueprint $table) {
+        ->create('reminders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('chatId')->unique();
-            $table->string('messengerType');
+            $table->integer('chatId');
+            $table->string('when');
+            $table->string('what');
+            $table->tinyInteger('active')->default(1);
             $table->timestamp('createdAt')->nullable();
             $table->timestamp('updatedAt')->nullable();
         });
