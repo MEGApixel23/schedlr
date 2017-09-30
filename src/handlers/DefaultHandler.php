@@ -12,9 +12,10 @@ class DefaultHandler
         $bot->reply('Hello there!');
     }
 
-    public function newMember(BotMan $bot)
+    public function chatStarted(Botman $bot) : Chat
     {
-        $bot->reply('New member!');
-        Chat::newChat($bot->getMessage()->getPayload());
+        return Chat::newChat(
+            $bot->getMessage()->getPayload()
+        );
     }
 }

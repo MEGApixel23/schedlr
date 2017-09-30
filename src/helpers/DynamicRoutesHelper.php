@@ -15,7 +15,7 @@ class DynamicRoutesHelper
 
             if ($isCurrentCommand) {
                 CallHelper::call(
-                    $commandRoutes[$command],
+                    $commandRoutes[$key],
                     [$bot, array_slice($normalizedParts, 1)]
                 );
                 break;

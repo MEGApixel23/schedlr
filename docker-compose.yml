@@ -5,7 +5,7 @@ services:
             context: ./
             dockerfile: deploy/app.docker
         extra_hosts:
-            - "docker_host:192.168.0.97"
+            - "docker_host:192.168.0.104"
         volumes:
             - ./src:/var/www
         links:
