@@ -10,13 +10,20 @@ services:
             - ./src:/var/www
         links:
             - database
+            - cache
         ports:
             - "8001:80"
     database:
         image: mysql:5.5
         environment:
             - "MYSQL_ROOT_PASSWORD=root"
-            - "MYSQL_DATABASE=database"
+            - "MYSQL_DATABASE=schedlr"
             - "MYSQL_USERNAME=root"
         ports:
             - "33061:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+    cache:
+        image: redis:4
+        ports:
+            - "63791:6379"

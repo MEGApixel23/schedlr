@@ -10,6 +10,9 @@ $botman->on('new_chat_member', function ($payload, $bot) {
 });
 $botman->hears('hello', 'app\handlers\DefaultHandler@index');
 $botman->hears('/start', 'app\handlers\DefaultHandler@chatStarted');
+$botman->hears('/remind', function ($bot) {
+    return $bot->startConversation(new \app\conversations\RemindConversation());
+});
 $botman->hears('{sentence}', function ($bot, $sentence) use ($config, $commandRoutes) {
     DynamicRoutesHelper::process($bot, $sentence, $config, $commandRoutes);
 });
