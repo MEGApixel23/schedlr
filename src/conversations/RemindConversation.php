@@ -2,10 +2,12 @@
 
 namespace app\conversations;
 
+use app\handlers\ReminderHandler;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Carbon\Carbon;
 
 class RemindConversation extends Conversation
 {
@@ -16,35 +18,29 @@ class RemindConversation extends Conversation
 
     public function run()
     {
-        return $this->askWhat();
+        return $this->next();
     }
 
     public function askWhat()
     {
-        $this->ask('What?', function (Answer $answer) {
+        $this->ask('Input text of a reminder', function (Answer $answer) {
             $this->what = $answer->getText();
-            $this->askWhen();
+            $this->next();
         });
     }
 
     public function askWhen()
     {
-        $question = Question::create('When ----------------------->?')
-            ->fallback('Unable to create a new database')
-            ->callbackId('create_database')
+        $question = Question::create('When to remind?')
             ->addButtons([
                 Button::create('Today')->value('today'),
                 Button::create('Tomorrow')->value('tomorrow'),
             ]);
 
         $this->ask($question, function (Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                $this->when = $answer->getValue();
-            } else {
-                $this->when = $answer->getText();
-            }
-
-            $this->askTime();
+            $this->when = $answer->isInteractiveMessageReply() ?
+                $answer->getValue() : $answer->getText();
+            $this->next();
         });
     }
 
@@ -52,15 +48,13 @@ class RemindConversation extends Conversation
     {
         $this->ask('What time?', function (Answer $answer) {
             $this->time = $answer->getText();
-            $this->askInterval();
+            $this->next();
         });
     }
 
     public function askInterval()
     {
         $question = Question::create('What interval?')
-            ->fallback('Unable to create a new database')
-            ->callbackId('create_interval')
             ->addButtons([
                 Button::create('Once')->value('once'),
                 Button::create('Daily')->value('daily'),
@@ -70,27 +64,38 @@ class RemindConversation extends Conversation
             ]);
 
         $this->ask($question, function (Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                $this->interval = $answer->getValue();
-            } else {
-                $this->interval = $answer->getText();
-            }
-
-            $this->say(json_encode([
-                '$what' => $this->what,
-                '$when' => $this->when,
-                '$time' => $this->time,
-                '$interval' => $this->interval,
-            ]));
+            $this->interval = $answer->isInteractiveMessageReply() ? $answer->getValue() : $answer->getText();
+            $this->next();
         });
     }
 
-    public function stopConversation(Message $message)
+    private function next()
     {
-        if ($message->getMessage() == 'stop') {
-            return true;
+        $routes = [
+            'what' => function () { return $this->askWhat(); },
+            'when' => function () { return $this->askWhen(); },
+            'time' => function () { return $this->askTime(); },
+            'interval' => function () { return $this->askInterval(); },
+        ];
+
+        foreach ($routes as $prop => $fn) {
+            if ($this->$prop === null) {
+                return $fn();
+            }
         }
 
-        return false;
+        return $this->createReminder();
+    }
+
+    private function createReminder()
+    {
+        (new ReminderHandler())->create($this->bot, [
+            'what' => $this->what,
+            'when' => Carbon::parse("{$this->when} {$this->time}"),
+            'time' => $this->time,
+            'interval' => $this->interval,
+        ]);
+
+        return $this->say('👍');
     }
 }

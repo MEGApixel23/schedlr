@@ -16,3 +16,6 @@ $botman->hears('/remind', function ($bot) {
 $botman->hears('{sentence}', function ($bot, $sentence) use ($config, $commandRoutes) {
     DynamicRoutesHelper::process($bot, $sentence, $config, $commandRoutes);
 });
+$botman->hears('/stop', function ($bot) {
+    $bot->reply('stopped');
+})->stopsConversation();

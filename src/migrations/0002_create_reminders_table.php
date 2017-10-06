@@ -8,10 +8,11 @@ return function () {
         ->create('reminders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('chatId');
-            $table->string('when');
+            $table->timestamp('when')->nullable()->default(null);
             $table->string('what');
+            $table->string('interval', 8);
             $table->tinyInteger('active')->default(1);
-            $table->timestamp('createdAt')->nullable();
-            $table->timestamp('updatedAt')->nullable();
+            $table->timestamp('createdAt')->nullable()->default(null);
+            $table->timestamp('updatedAt')->nullable()->default(null);
         });
 };

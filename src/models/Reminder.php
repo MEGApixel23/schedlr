@@ -15,7 +15,7 @@ class Reminder extends Model
 
     protected $fillable = [
         'chatId', 'when', 'what',
-        'active'
+        'interval', 'active'
     ];
 
     public function chat()
