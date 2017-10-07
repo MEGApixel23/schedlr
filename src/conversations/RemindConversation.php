@@ -2,12 +2,12 @@
 
 namespace app\conversations;
 
+use Carbon\Carbon;
 use app\handlers\ReminderHandler;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Conversations\Conversation;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use Carbon\Carbon;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class RemindConversation extends Conversation
 {
@@ -89,9 +89,18 @@ class RemindConversation extends Conversation
 
     private function createReminder()
     {
+        try {
+            $when = Carbon::parse("{$this->when} {$this->time}");
+        } catch (\Exception $e) {
+            $this->say('Error in parsing time.');
+            $this->when = $this->time = null;
+
+            return $this->next();
+        }
+
         (new ReminderHandler())->create($this->bot, [
             'what' => $this->what,
-            'when' => Carbon::parse("{$this->when} {$this->time}"),
+            'when' => $when->toIso8601String(),
             'time' => $this->time,
             'interval' => $this->interval,
         ]);
