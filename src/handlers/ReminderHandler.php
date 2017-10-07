@@ -10,6 +10,10 @@ class ReminderHandler
 {
     public function create(BotMan $bot, array $parts)
     {
+        if (isset($parts['when'])) {
+            return $this->createFromParts($bot, $parts);
+        }
+
         $when = $this->getDate($parts[0]);
         $what = $this->getWhatToRemind($parts);
         $chatId = $bot->getMessage()->getPayload()['chat']['id'];
@@ -23,6 +27,16 @@ class ReminderHandler
         ]);
 
         return $bot->reply('👍');
+    }
+
+    private function createFromParts(BotMan $bot, array $parts) : Reminder
+    {
+        $chatId = $bot->getMessage()->getPayload()['chat']['id'];
+        $chat = Chat::where('chatId', $chatId)->first();
+
+        return Reminder::create(array_merge($parts, [
+            'chatId' => $chat->id
+        ]));
     }
 
     private function getDate(string $str)
