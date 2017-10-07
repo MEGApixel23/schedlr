@@ -8,6 +8,7 @@ require_once(__DIR__ . '/bootstrap.php');
 $commands = [
     'migrate' => 'app\commands\MigrateCommand',
     'remind' => 'app\commands\SendRemindersCommand',
+    'schedule' => 'app\commands\CreateScheduledReminders',
 ];
 
 $cmd = $argv[1] ?? null;

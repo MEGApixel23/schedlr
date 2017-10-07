@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property Chat $chat
  * @property string $what
+ * @property string $interval
  */
 class Reminder extends Model
 {
@@ -15,7 +16,7 @@ class Reminder extends Model
 
     protected $fillable = [
         'chatId', 'when', 'what',
-        'interval', 'active'
+        'interval', 'active', 'nextScheduleDate'
     ];
 
     public function chat()
