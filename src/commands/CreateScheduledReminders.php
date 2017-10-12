@@ -9,10 +9,12 @@ use Illuminate\Database\Query\Builder;
 
 class CreateScheduledReminders
 {
+    private $checkInterval = 60;
+
     public function run() : bool
     {
-        $timeTo = Carbon::now()->toTimeString();
-        $timeFrom = Carbon::now()->subMinutes(60)->toTimeString();
+        $timeFrom = Carbon::now()->toTimeString();
+        $timeTo = Carbon::now()->addMinutes(60)->toTimeString();
 
         /** @var Builder $query */
         $query = Reminder::whereRaw('TIME(`when`) BETWEEN ? AND ?', [ $timeFrom, $timeTo ])
@@ -28,21 +30,24 @@ class CreateScheduledReminders
         return true;
     }
 
-    private function createScheduledReminder(Reminder $reminder)
-    {
-    }
-
-    private function updateNextScheduleDate(Reminder $reminder)
+    private function updateNextScheduleDate(Reminder $reminder) : Carbon
     {
         $schedulers = [
-            'daily' => function () { return Carbon::now()->addDay(); },
-            'weekly' => function (Reminder $reminder, Carbon $when) {
-                return Carbon::parse("next {$when->format('l')}");
+            'daily' => function (Reminder $reminder) {
+                if ($reminder->lastSentDate === null) {
+                    return Carbon::parse($reminder->when);
+                }
+
+                return Carbon::now()->addDay();
             }
         ];
         $next = isset($schedulers[$reminder->interval]) ?
-            $schedulers[$reminder->interval]($reminder, Carbon::parse($reminder->when)) :
+            $schedulers[$reminder->interval]($reminder) :
             null;
+
+        $reminder->update([
+            'nextScheduleDate' => $next
+        ]);
 
         return $next;
     }

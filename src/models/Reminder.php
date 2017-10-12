@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Chat $chat
  * @property string $what
  * @property string $interval
+ * @property string $when
+ * @property string $lastSentDate
+ * @property string $nextScheduleDate
  */
 class Reminder extends Model
 {
