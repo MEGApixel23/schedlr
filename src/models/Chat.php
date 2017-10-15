@@ -4,6 +4,10 @@ namespace app\models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string|int $chatId
+ * @property string $messengerType
+ */
 class Chat extends Model
 {
     const CREATED_AT = 'createdAt';
