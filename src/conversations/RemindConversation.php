@@ -58,9 +58,9 @@ class RemindConversation extends Conversation
             ->addButtons([
                 Button::create('Once')->value('once'),
                 Button::create('Daily')->value('daily'),
-                Button::create('Weekly')->value('weekly'),
-                Button::create('Monthly')->value('monthly'),
-                Button::create('Yearly')->value('yearly'),
+//                Button::create('Weekly')->value('weekly'),
+//                Button::create('Monthly')->value('monthly'),
+//                Button::create('Yearly')->value('yearly'),
             ]);
 
         $this->ask($question, function (Answer $answer) {
