@@ -41,7 +41,10 @@ class SendRemindersCommand
 
         return Reminder::whereBetween('nextScheduleDate', [$from, $to])
             ->where('active', 1)
-            ->where('lastSentDate', '<', $from)
+            ->where(function (Builder $query) use ($from): Builder {
+                return $query->where('lastSentDate', '<', $from)
+                    ->orWhereNull('lastSentDate');
+            })
             ->orderBy('nextScheduleDate', 'asc')
             ->with('chat')
             ->limit(100);
@@ -68,12 +71,14 @@ class SendRemindersCommand
             'once' => function (): array {
                 return [
                     'active' => 0,
-                    'lastSentDate' => Carbon::now()->toIso8601String()
+                    'lastSentDate' => Carbon::now()->toIso8601String(),
+                    'nextScheduleDate' => null
                 ];
             },
             'daily' => function (): array {
                 return [
-                    'lastSentDate' => Carbon::now()->toIso8601String()
+                    'lastSentDate' => Carbon::now()->toIso8601String(),
+                    'nextScheduleDate' => null
                 ];
             },
         ];
