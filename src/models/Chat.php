@@ -18,9 +18,15 @@ class Chat extends Model
         'chatId', 'messengerType'
     ];
 
-    public static function newChat($payload, $messengerType = self::MESSENGER_TYPE_TELEGRAM)
+    public static function newChat($payload, $messengerType = self::MESSENGER_TYPE_TELEGRAM): self
     {
-        return self::create([
+        $attr = [
+            'chatId' => $payload['chat']['id'],
+            'messengerType' => $messengerType
+        ];
+        $i = self::where($attr)->first();
+
+        return $i ?: self::create([
             'chatId' => $payload['chat']['id'],
             'messengerType' => $messengerType
         ]);
