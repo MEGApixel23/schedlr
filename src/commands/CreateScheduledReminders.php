@@ -38,11 +38,16 @@ class CreateScheduledReminders
                 return Carbon::parse($reminder->when);
             },
             'daily' => function (Reminder $reminder): Carbon {
-                if ($reminder->lastSentDate === null) {
-                    return Carbon::parse($reminder->when);
+                $d = Carbon::parse($reminder->when);
+                $now = Carbon::now();
+                $isTimePassed = $d->hour === $now->hour && $d->minute < $now->minute || $d->hour < $now->hour;
+
+                if ($isTimePassed) {
+                    $now->addDay();
                 }
 
-                return Carbon::now()->addDay();
+                return $now->hour($d->hour)
+                    ->minute($d->minute);
             }
         ];
         $next = isset($schedulers[$reminder->interval]) ?
