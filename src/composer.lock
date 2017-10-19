@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "30fbeaca691ba27d40992f3aeeac72e5",
+    "content-hash": "1f9cf8a6d14c3354e930b64443b4b556",
     "packages": [
         {
             "name": "botman/botman",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/botman/botman.git",
-                "reference": "6cc38f48c07713b438af52596d93b5b2ee38d1ed"
+                "reference": "0f7cf8afbaad7750b751da9472503b8e401885c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/botman/botman/zipball/6cc38f48c07713b438af52596d93b5b2ee38d1ed",
-                "reference": "6cc38f48c07713b438af52596d93b5b2ee38d1ed",
+                "url": "https://api.github.com/repos/botman/botman/zipball/0f7cf8afbaad7750b751da9472503b8e401885c7",
+                "reference": "0f7cf8afbaad7750b751da9472503b8e401885c7",
                 "shasum": ""
             },
             "require": {
@@ -25,6 +25,7 @@
                 "opis/closure": "^2.3",
                 "php": ">=7.0",
                 "react/socket": "0.4.*",
+                "spatie/macroable": "^1.0",
                 "symfony/http-foundation": "2.8.*|3.0.*|3.1.*|3.2.*|3.3.*",
                 "tightenco/collect": "~5.0"
             },
@@ -47,6 +48,14 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.1-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "BotMan\\BotMan\\BotManServiceProvider"
+                    ],
+                    "aliases": {
+                        "BotMan": "BotMan\\BotMan\\Facades\\BotMan"
+                    }
                 }
             },
             "autoload": {
@@ -71,20 +80,20 @@
                 "bot",
                 "chatbot"
             ],
-            "time": "2017-09-20T20:45:51+00:00"
+            "time": "2017-10-18T20:37:16+00:00"
         },
         {
             "name": "botman/driver-telegram",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/botman/driver-telegram.git",
-                "reference": "d23c6bf8af9d4598aef61078c84d0e2b65a4b8e0"
+                "reference": "d6e067f0909f1d0726d1ff6960da5dd0d8e0b98d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/botman/driver-telegram/zipball/d23c6bf8af9d4598aef61078c84d0e2b65a4b8e0",
-                "reference": "d23c6bf8af9d4598aef61078c84d0e2b65a4b8e0",
+                "url": "https://api.github.com/repos/botman/driver-telegram/zipball/d6e067f0909f1d0726d1ff6960da5dd0d8e0b98d",
+                "reference": "d6e067f0909f1d0726d1ff6960da5dd0d8e0b98d",
                 "shasum": ""
             },
             "require": {
@@ -119,7 +128,7 @@
                 "bot",
                 "telegram"
             ],
-            "time": "2017-09-14T21:06:49+00:00"
+            "time": "2017-10-05T20:50:29+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -127,12 +136,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "2e78bae4e737f4a95fd7a553ae74b7a5997e6a30"
+                "reference": "40daa067a3e5fb95572236a346a8290e4445778f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/2e78bae4e737f4a95fd7a553ae74b7a5997e6a30",
-                "reference": "2e78bae4e737f4a95fd7a553ae74b7a5997e6a30",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/40daa067a3e5fb95572236a346a8290e4445778f",
+                "reference": "40daa067a3e5fb95572236a346a8290e4445778f",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +195,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-09-18T20:24:46+00:00"
+            "time": "2017-10-04T05:38:52+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -286,12 +295,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "8b84fde53a039253dfe579bb11b0e0a06dc47b5b"
+                "reference": "ae69cd01353b505dcdb1e67f8a7c91164ca7b175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/8b84fde53a039253dfe579bb11b0e0a06dc47b5b",
-                "reference": "8b84fde53a039253dfe579bb11b0e0a06dc47b5b",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/ae69cd01353b505dcdb1e67f8a7c91164ca7b175",
+                "reference": "ae69cd01353b505dcdb1e67f8a7c91164ca7b175",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +331,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2017-09-21T14:39:54+00:00"
+            "time": "2017-10-06T13:10:32+00:00"
         },
         {
             "name": "illuminate/database",
@@ -330,12 +339,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "7f6fff242fb2f711973e9bca2acdadcaddc7b5a4"
+                "reference": "8054ba8539207bd7a101106dacd8c230ab2b866d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/7f6fff242fb2f711973e9bca2acdadcaddc7b5a4",
-                "reference": "7f6fff242fb2f711973e9bca2acdadcaddc7b5a4",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/8054ba8539207bd7a101106dacd8c230ab2b866d",
+                "reference": "8054ba8539207bd7a101106dacd8c230ab2b866d",
                 "shasum": ""
             },
             "require": {
@@ -381,7 +390,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-09-23T18:37:05+00:00"
+            "time": "2017-10-17T13:16:51+00:00"
         },
         {
             "name": "illuminate/support",
@@ -389,12 +398,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "82fc812aea12a5e95b49a1f2170f85e3dfe321d9"
+                "reference": "b34c7f852f255a26503fc491c85abb581257f166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/82fc812aea12a5e95b49a1f2170f85e3dfe321d9",
-                "reference": "82fc812aea12a5e95b49a1f2170f85e3dfe321d9",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b34c7f852f255a26503fc491c85abb581257f166",
+                "reference": "b34c7f852f255a26503fc491c85abb581257f166",
                 "shasum": ""
             },
             "require": {
@@ -438,7 +447,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2017-09-23T18:37:05+00:00"
+            "time": "2017-10-19T12:43:54+00:00"
         },
         {
             "name": "mpociot/pipeline",
@@ -863,17 +872,63 @@
             "time": "2017-01-25T14:44:14+00:00"
         },
         {
+            "name": "spatie/macroable",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/macroable.git",
+                "reference": "74b0d189ce75142f1706aad834d5a428dfc7c3c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/macroable/zipball/74b0d189ce75142f1706aad834d5a428dfc7c3c3",
+                "reference": "74b0d189ce75142f1706aad834d5a428dfc7c3c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Macroable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A trait to dynamically add methods to a class",
+            "homepage": "https://github.com/spatie/macroable",
+            "keywords": [
+                "macroable",
+                "spatie"
+            ],
+            "time": "2017-09-18T09:51:20+00:00"
+        },
+        {
             "name": "symfony/http-foundation",
             "version": "3.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "74c8c45eefebbcba8b20b71335c56149cf2adee0"
+                "reference": "be453f9db8d6adfaa968cc840019d23ecc115854"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/74c8c45eefebbcba8b20b71335c56149cf2adee0",
-                "reference": "74c8c45eefebbcba8b20b71335c56149cf2adee0",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/be453f9db8d6adfaa968cc840019d23ecc115854",
+                "reference": "be453f9db8d6adfaa968cc840019d23ecc115854",
                 "shasum": ""
             },
             "require": {
@@ -913,7 +968,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-09-15T17:08:21+00:00"
+            "time": "2017-10-18T15:00:09+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -921,12 +976,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
                 "shasum": ""
             },
             "require": {
@@ -938,7 +993,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -972,7 +1027,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-14T15:44:48+00:00"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/translation",
@@ -980,12 +1035,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "936bf6dc8955de486d11deebd26aa938322b1555"
+                "reference": "24110f6b3f3fe5f9caa2a65bd3b8cba5f25be185"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/936bf6dc8955de486d11deebd26aa938322b1555",
-                "reference": "936bf6dc8955de486d11deebd26aa938322b1555",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/24110f6b3f3fe5f9caa2a65bd3b8cba5f25be185",
+                "reference": "24110f6b3f3fe5f9caa2a65bd3b8cba5f25be185",
                 "shasum": ""
             },
             "require": {
@@ -995,7 +1050,7 @@
             "conflict": {
                 "symfony/config": "<2.8",
                 "symfony/dependency-injection": "<3.4",
-                "symfony/yaml": "<3.3"
+                "symfony/yaml": "<3.4"
             },
             "require-dev": {
                 "psr/log": "~1.0",
@@ -1003,7 +1058,7 @@
                 "symfony/dependency-injection": "~3.4|~4.0",
                 "symfony/finder": "~2.8|~3.0|~4.0",
                 "symfony/intl": "^2.8.18|^3.2.5|~4.0",
-                "symfony/yaml": "~3.3|~4.0"
+                "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
                 "psr/log": "To use logging capability in translator",
@@ -1040,7 +1095,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-09-15T10:12:22+00:00"
+            "time": "2017-10-13T13:33:47+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1048,12 +1103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "3dd3d8f90e6604e75cca48ec32b033b50b05135b"
+                "reference": "828d19e597052ddeee65890bb2b1a0912d79fea8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/3dd3d8f90e6604e75cca48ec32b033b50b05135b",
-                "reference": "3dd3d8f90e6604e75cca48ec32b033b50b05135b",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/828d19e597052ddeee65890bb2b1a0912d79fea8",
+                "reference": "828d19e597052ddeee65890bb2b1a0912d79fea8",
                 "shasum": ""
             },
             "require": {
@@ -1065,7 +1120,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -1090,7 +1145,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2017-08-08T20:02:34+00:00"
+            "time": "2017-10-10T06:32:45+00:00"
         }
     ],
     "packages-dev": [],
@@ -1101,6 +1156,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=7.1"
+    },
     "platform-dev": []
 }
