@@ -13,6 +13,8 @@ $botman->on('new_chat_member', function ($payload, BotMan $bot): void {
 });
 $botman->hears('hello', 'app\handlers\DefaultHandler@index');
 $botman->hears('/start', 'app\handlers\DefaultHandler@chatStarted');
+$botman->hears('/list', 'app\handlers\ListHandler@index');
+$botman->hears('/edit_{id}', 'app\handlers\ListHandler@index');
 $botman->hears('/remind', function (BotMan $bot): void {
     $bot->startConversation(new RemindConversation());
 });
