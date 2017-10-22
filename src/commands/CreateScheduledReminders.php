@@ -26,8 +26,10 @@ class CreateScheduledReminders
         $timeFrom = Carbon::now()->toTimeString();
         $timeTo = Carbon::now()->addMinutes($this->checkInterval)->toTimeString();
 
-        return Reminder::whereRaw('TIME(`when`) BETWEEN ? AND ?', [$timeFrom, $timeTo])
-            ->where('active', 1)
+        return Reminder::timeBetween($timeFrom, $timeTo)
+            ->active()
+            ->notScheduled()
+            ->notSentDuring(Carbon::now()->subHour(2))
             ->orderBy('updatedAt', 'asc');
     }
 
@@ -53,7 +55,7 @@ class CreateScheduledReminders
         $next = isset($schedulers[$reminder->interval]) ?
             $schedulers[$reminder->interval]($reminder) :
             null;
-        $reminder->update([ 'nextScheduleDate' => $next ]);
+        $reminder->update(['nextScheduleDate' => $next]);
 
         return $reminder;
     }

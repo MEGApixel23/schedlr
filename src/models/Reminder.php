@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -30,8 +31,24 @@ class Reminder extends Model
         return $this->hasOne(Chat::class, 'id', 'chatId');
     }
 
+    public function scopeTimeBetween(Builder $query, string $timeFrom, string $timeTo): Builder
+    {
+        return $query->whereRaw('TIME(`when`) BETWEEN ? AND ?', [$timeFrom, $timeTo]);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', 1);
+    }
+
+    public function scopeNotScheduled(Builder $query): Builder
+    {
+        return $query->whereNull('nextScheduleDate');
+    }
+
+    public function scopeNotSentDuring(Builder $query, Carbon $during): Builder
+    {
+        return $query->where('lastSentDate', '<=', $during->toIso8601String())
+            ->orWhereNull('lastSentDate');
     }
 }

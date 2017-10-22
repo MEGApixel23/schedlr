@@ -40,11 +40,7 @@ class SendRemindersCommand
         $to = Carbon::now()->addMinutes(3);
 
         return Reminder::whereBetween('nextScheduleDate', [$from, $to])
-            ->where('active', 1)
-            ->where(function (Builder $query) use ($from): Builder {
-                return $query->where('lastSentDate', '<', $from)
-                    ->orWhereNull('lastSentDate');
-            })
+            ->active()
             ->orderBy('nextScheduleDate', 'asc')
             ->with('chat')
             ->limit(100);
