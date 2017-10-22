@@ -3,6 +3,7 @@
 namespace app\conversations;
 
 use Carbon\Carbon;
+use app\models\Chat;
 use app\handlers\ReminderHandler;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -87,7 +88,10 @@ class RemindConversation extends Conversation
     private function createReminder()
     {
         try {
-            $when = Carbon::parse("{$this->when} {$this->time}");
+            $chatId = $this->bot->getMessage()->getPayload()['chat']['id'];
+            $chat = Chat::where('chatId', $chatId)->first();
+
+            $when = Carbon::parse("{$this->when} {$this->time}", $chat->timezone);
         } catch (\Exception $e) {
             $this->say('Error in parsing time.');
             $this->when = $this->time = null;
@@ -95,13 +99,13 @@ class RemindConversation extends Conversation
             return $this->next();
         }
 
-        (new ReminderHandler())->create($this->bot, [
+        $r = (new ReminderHandler())->create($this->bot, [
             'what' => $this->what,
             'when' => $when->toIso8601String(),
             'time' => $this->time,
             'interval' => $this->interval,
         ]);
 
-        return $this->say('👍');
+        return $this->say("Reminder scheduled to {$r->when} 👍");
     }
 }

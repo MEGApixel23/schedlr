@@ -15,7 +15,7 @@ class Chat extends Model
     const MESSENGER_TYPE_TELEGRAM = 'telegram';
 
     protected $fillable = [
-        'chatId', 'messengerType'
+        'chatId', 'messengerType', 'timezone'
     ];
 
     public static function newChat($payload, $messengerType = self::MESSENGER_TYPE_TELEGRAM): self
