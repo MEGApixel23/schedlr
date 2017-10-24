@@ -4,6 +4,10 @@ namespace app\models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string|int $chatId
+ * @property string $messengerType
+ */
 class Chat extends Model
 {
     const CREATED_AT = 'createdAt';
@@ -11,12 +15,18 @@ class Chat extends Model
     const MESSENGER_TYPE_TELEGRAM = 'telegram';
 
     protected $fillable = [
-        'chatId', 'messengerType'
+        'chatId', 'messengerType', 'timezone'
     ];
 
-    public static function newChat($payload, $messengerType = self::MESSENGER_TYPE_TELEGRAM)
+    public static function newChat($payload, $messengerType = self::MESSENGER_TYPE_TELEGRAM): self
     {
-        return self::create([
+        $attr = [
+            'chatId' => $payload['chat']['id'],
+            'messengerType' => $messengerType
+        ];
+        $i = self::where($attr)->first();
+
+        return $i ?: self::create([
             'chatId' => $payload['chat']['id'],
             'messengerType' => $messengerType
         ]);

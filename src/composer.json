@@ -1,15 +1,25 @@
 {
     "name": "megapixel23/schedlr",
     "require": {
+        "php": ">=7.1",
         "botman/botman": "^2.0",
-        "botman/driver-telegram": "^1.0",
+        "botman/driver-telegram": "dev-feature/keyboard-buttons-row",
         "vlucas/phpdotenv": "^2.4",
         "illuminate/database": "^5.6@dev"
     },
     "minimum-stability": "dev",
     "autoload": {
+        "files": [
+            "helpers/MessagesHelper.php"
+        ],
         "psr-4": {
             "app\\": "./"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/MEGApixel23/driver-telegram"
+        }
+    ]
 }

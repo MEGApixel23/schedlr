@@ -1,0 +1,15 @@
+language: php
+
+php:
+  - 7.1
+
+cache:
+  directories:
+    - $HOME/.composer
+
+before_script:
+  - cd src/
+  - composer install --no-dev
+
+script:
+  - echo "No tests provided yet"

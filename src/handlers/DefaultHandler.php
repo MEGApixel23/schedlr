@@ -4,6 +4,7 @@ namespace app\handlers;
 
 use app\models\Chat;
 use BotMan\BotMan\BotMan;
+use app\conversations\RemindConversation;
 
 class DefaultHandler
 {
@@ -12,10 +13,10 @@ class DefaultHandler
         $bot->reply('Hello there!');
     }
 
-    public function chatStarted(Botman $bot) : Chat
+    public function chatStarted(Botman $bot): void
     {
-        return Chat::newChat(
-            $bot->getMessage()->getPayload()
-        );
+        Chat::newChat($bot->getMessage()->getPayload());
+
+        $bot->startConversation(new RemindConversation());
     }
 }
