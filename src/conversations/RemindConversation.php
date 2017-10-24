@@ -2,6 +2,8 @@
 
 namespace app\conversations;
 
+use function app\helpers\message;
+
 use Carbon\Carbon;
 use app\models\Chat;
 use app\handlers\ReminderHandler;
@@ -24,7 +26,7 @@ class RemindConversation extends Conversation
 
     public function askWhat()
     {
-        $this->ask('Input text of a reminder', function (Answer $answer) {
+        $this->ask(message('input_text_of_reminder'), function (Answer $answer) {
             $this->what = $answer->getText();
             $this->next();
         });
@@ -32,10 +34,10 @@ class RemindConversation extends Conversation
 
     public function askWhen()
     {
-        $question = Question::create('When to remind?')
+        $question = Question::create(message('when_to_remind_question'))
             ->addButtons([
-                Button::create('Today')->value('today'),
-                Button::create('Tomorrow')->value('tomorrow'),
+                Button::create(message('when.today'))->value('today'),
+                Button::create(message('when.tomorrow'))->value('tomorrow'),
             ]);
 
         $this->ask($question, function (Answer $answer) {
@@ -47,7 +49,7 @@ class RemindConversation extends Conversation
 
     public function askTime()
     {
-        $this->ask('What time?', function (Answer $answer) {
+        $this->ask(message('what_time_question'), function (Answer $answer) {
             $this->time = $answer->getText();
             $this->next();
         });
@@ -55,10 +57,10 @@ class RemindConversation extends Conversation
 
     public function askInterval()
     {
-        $question = Question::create('What interval?')
+        $question = Question::create(message('what_interval_question'))
             ->addButtons([
-                Button::create('Once')->value('once'),
-                Button::create('Daily')->value('daily'),
+                Button::create(message('interval.once'))->value('once'),
+                Button::create(message('interval.daily'))->value('daily'),
             ]);
 
         $this->ask($question, function (Answer $answer) {
@@ -93,7 +95,7 @@ class RemindConversation extends Conversation
 
             $when = Carbon::parse("{$this->when} {$this->time}", $chat->timezone);
         } catch (\Exception $e) {
-            $this->say('Error in parsing time.');
+            $this->say(message('error_in_parsing_time'));
             $this->when = $this->time = null;
 
             return $this->next();
@@ -106,6 +108,8 @@ class RemindConversation extends Conversation
             'interval' => $this->interval,
         ]);
 
-        return $this->say("Reminder scheduled to {$r->when} 👍");
+        return $this->say(
+            str_replace('{when}', $r->when, message('reminder_set'))
+        );
     }
 }

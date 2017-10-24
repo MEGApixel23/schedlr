@@ -2,6 +2,8 @@
 
 namespace app\conversations;
 
+use function app\helpers\message;
+
 use app\models\Chat;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -15,7 +17,7 @@ class TimezoneConversation extends Conversation
 
     public function run(): void
     {
-        $question = Question::create('Select your timezone')
+        $question = Question::create(message('select_timezone'))
             ->addButtons($this->createButtons(4));
         $inst = $this;
 
@@ -29,7 +31,9 @@ class TimezoneConversation extends Conversation
 
                 Chat::where('chatId', $chatId)->update(['timezone' => $this->timezone]);
 
-                $this->say("{$text} timezone was set 👍");
+                $this->say(
+                    str_replace('{text}', $text, message('timezone_set'))
+                );
             }
         );
     }

@@ -1,5 +1,7 @@
 <?php
 
+use function app\helpers\message;
+
 use BotMan\BotMan\BotMan;
 use app\handlers\DefaultHandler;
 use app\helpers\DynamicRoutesHelper;
@@ -11,7 +13,6 @@ $commandRoutes = require_once(__DIR__ . '/dynamicRoutes.php');
 $botman->on('new_chat_member', function ($payload, BotMan $bot): void {
     (new DefaultHandler())->chatStarted($bot);
 });
-$botman->hears('hello', 'app\handlers\DefaultHandler@index');
 $botman->hears('/start', 'app\handlers\DefaultHandler@chatStarted');
 $botman->hears('/list', 'app\handlers\ListHandler@index');
 $botman->hears('/edit_{id}', 'app\handlers\ListHandler@index');
@@ -24,6 +25,6 @@ $botman->hears('/timezone', function (BotMan $bot): void {
 $botman->hears('{sentence}', function ($bot, $sentence) use ($config, $commandRoutes): void {
     DynamicRoutesHelper::process($bot, $sentence, $config, $commandRoutes);
 });
-$botman->hears('/stop', function ($bot) {
-    $bot->reply('stopped');
+$botman->hears('/stop', function (BotMan $bot) {
+    $bot->reply(message('creation_stopped'));
 })->stopsConversation();

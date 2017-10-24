@@ -2,6 +2,8 @@
 
 namespace app\handlers;
 
+use function app\helpers\message;
+
 use Carbon\Carbon;
 use app\models\Chat;
 use app\models\Reminder;
@@ -28,11 +30,13 @@ class ListHandler
     {
         $c = Carbon::parse($r->when);
         if ($r->interval === 'once') {
-            $date = $c->format('j M H:i');
+            $date = $c->format(message('once_date_format'));
         } elseif ($r->interval === 'daily') {
-            $date = "Daily {$c->format('H:i')}";
+            $f = $c->format(message('daily_date_format'));
+            $interval = message('interval.daily');
+            $date = "{$interval} {$f}";
         } else {
-            throw new \Error('Invalid period');
+            throw new \Error(message('invalid_period'));
         }
 
         return "{$date} \"{$r->what}\" /edit_{$r->id}";
