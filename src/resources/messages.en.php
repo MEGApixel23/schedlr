@@ -23,5 +23,7 @@ return [
     'daily_date_format' => 'H:i',
 
     'invalid_period' => 'Invalid period',
-    'creation_stopped' => 'Canceled'
+    'creation_stopped' => 'Canceled',
+    'reminder_disabled' => 'Reminder "{text}" was disabled',
+    'reminder_short_desc' => '{date} "{text}" /disable_{id}'
 ];

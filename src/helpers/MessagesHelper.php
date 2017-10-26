@@ -2,11 +2,19 @@
 
 namespace app\helpers;
 
-function message(string $key, array $params = []): string {
+function message(string $key, ...$params): string {
     static $messages = [];
 
-    $locale = $params['locale'] ?? 'en';
-    $replacer = $params['replacer'] ?? null;
+    $locale = 'en';
+    $replaces = null;
+
+    foreach ($params as $param) {
+        if (is_string($param)) {
+            $locale = $param;
+        } elseif (is_array($param)) {
+            $replaces = $param;
+        }
+    }
 
     if (isset($messages[$locale]) === false) {
         $file = __DIR__ . "/../resources/messages.{$locale}.php";
@@ -23,6 +31,12 @@ function message(string $key, array $params = []): string {
 
     foreach ($path as $item) {
         $res = $res[$item];
+    }
+
+    if ($replaces) {
+        foreach ($replaces as $placeholder => $replace) {
+            $res = str_replace($placeholder, $replace, $res);
+        }
     }
 
     return $res;

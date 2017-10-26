@@ -4,10 +4,12 @@ namespace app\handlers;
 
 use function app\helpers\message;
 
+use Error;
 use Carbon\Carbon;
 use app\models\Chat;
 use app\models\Reminder;
 use BotMan\BotMan\BotMan;
+use Illuminate\Database\Eloquent\Collection;
 
 class ListHandler
 {
@@ -15,15 +17,18 @@ class ListHandler
     {
         $chatId = $bot->getMessage()->getPayload()['chat']['id'];
         $chat = Chat::where('chatId', $chatId)->first();
-        $reminders = Reminder::where('chatId', $chat->id)
-            ->active()
-            ->get();
-
-        $bot->reply(
-            $reminders->map(function ($r) {
+        $text = $this->getActiveReminders($chat)
+            ->map(function ($r) {
                 return $this->getReminderDesc($r);
-            })->implode("\n")
-        );
+            })
+            ->implode("\n");
+
+        $bot->reply($text);
+    }
+
+    private function getActiveReminders(Chat $chat): Collection
+    {
+        return Reminder::where('chatId', $chat->id)->active()->get();
     }
 
     private function getReminderDesc(Reminder $r): string
@@ -36,9 +41,13 @@ class ListHandler
             $interval = message('interval.daily');
             $date = "{$interval} {$f}";
         } else {
-            throw new \Error(message('invalid_period'));
+            throw new Error(message('invalid_period'));
         }
 
-        return "{$date} \"{$r->what}\" /edit_{$r->id}";
+        return message('reminder_short_desc', [
+            '{id}' => $r->id,
+            '{date}' => $date,
+            '{text}' => $r->what,
+        ]);
     }
 }

@@ -5,6 +5,7 @@ namespace app\models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property int $id
  * @property string|int $chatId
  * @property string $messengerType
  */

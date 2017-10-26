@@ -31,6 +31,11 @@ class Reminder extends Model
         return $this->hasOne(Chat::class, 'id', 'chatId');
     }
 
+    public function dectivate()
+    {
+        return $this->update(['active' => 0]);
+    }
+
     public function scopeTimeBetween(Builder $query, string $timeFrom, string $timeTo): Builder
     {
         return $query->whereRaw('TIME(`when`) BETWEEN ? AND ?', [$timeFrom, $timeTo]);
