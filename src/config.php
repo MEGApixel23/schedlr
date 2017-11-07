@@ -9,6 +9,7 @@ return [
     ],
     'db' => [
         'driver' => 'mysql',
+        'strict' => false,
         'host' => getenv('MYSQL_HOST'),
         'database' => getenv('MYSQL_DB'),
         'username' => getenv('MYSQL_USER'),
