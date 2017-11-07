@@ -13,3 +13,9 @@ before_script:
 
 script:
   - echo "No tests provided yet"
+
+after_success:
+  - eval "$(ssh-agent -s)"
+  - chmod 600 .travis/digitalocean
+  - ssh-add .travis/digitalocean
+  - ssh $DEPLOY_USER@$DEPLOY_IP "cd /var/www/app-upload && git pull origin && ./update.sh"
