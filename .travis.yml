@@ -1,21 +1,19 @@
 language: php
-
 php:
-  - 7.1
-
+- 7.1
 cache:
   directories:
-    - $HOME/.composer
-
+  - "$HOME/.composer"
 before_script:
-  - cd src/
-  - composer install --no-dev
-
+- cd src/
+- composer install --no-dev
 script:
-  - echo "No tests provided yet"
-
+- echo "No tests provided yet"
 after_success:
-  - eval "$(ssh-agent -s)"
-  - chmod 600 .travis/digitalocean
-  - ssh-add .travis/digitalocean
-  - ssh $DEPLOY_USER@$DEPLOY_IP "cd /var/www/app-upload && git pull origin && ./update.sh"
+- eval "$(ssh-agent -s)"
+- chmod 600 .travis/digitalocean
+- ssh-add .travis/digitalocean
+- ssh $DEPLOY_USER@$DEPLOY_IP "cd /var/www/app-upload && git pull origin && ./update.sh"
+before_install:
+- openssl aes-256-cbc -K $encrypted_899ee332488e_key -iv $encrypted_899ee332488e_iv
+  -in digitalocean.enc -out ~\/.ssh/digitalocean -d
